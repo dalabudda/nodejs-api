@@ -7,12 +7,13 @@ users.init = (req, res) => {
     MongoClient.connect(url, (err, db) => {
         if (err) throw err;
         let dbo = db.db("heroku_hlcqgxf6");
-        dbo.createCollection("users", (err, res) => {
+        dbo.createCollection("users", (err, result) => {
             if (err) throw err;
             console.log("Collection created!");
             db.close();
         });
     });
+    res.send("Done");
 };
 
 users.put = (req, res) => {
@@ -44,16 +45,26 @@ users.put = (req, res) => {
             dateOfTermination: "",
             employmentStatus: true
           };
-        dbo.collection("users").insertOne(myobj, function(err, res) {
+        dbo.collection("users").insertOne(myobj, function(err, result) {
             if (err) throw err;
             console.log("1 user inserted");
             db.close();
           });
       });
+      res.send("Done");
 };
 
 users.get = (req, res) => {
-    res.send('This is POST');
+    MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        let dbo = db.db("heroku_hlcqgxf6");
+        dbo.collection("users").find({}).toArray(function(err, result) {
+            if (err) throw err;
+            console.log(result);
+            db.close();
+            res.send(JSON.stringify(result));
+          });
+    });
 };
 
 module.exports = users;
