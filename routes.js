@@ -6,7 +6,7 @@ const router = express.Router();
 router.get('/users/init', users.init);
 router.get('/users/add', users.put);
 router.get('/users', users.get);
-router.get('/reports', report.get);
-router.post('/reports', report.post);
+router.get('/reports', reports.get);
+router.post('/reports', reports.post);
 
 module.exports = router;
