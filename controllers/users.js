@@ -1,7 +1,7 @@
 let users = {};
 
 let MongoClient = require('mongodb').MongoClient;
-let url = process.env.MONGODB_URI;
+let url = process.env.MONGODB_URI+"/mydb";
 
 users.init = (req, res) => {
     MongoClient.connect(url, (err, db) => {
