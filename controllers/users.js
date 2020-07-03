@@ -36,7 +36,6 @@ users.put = (req, res) => {
         if (err) throw err;
         const dbo = db.db(dbname);
         const myobj = {
-            id: 1,
             employeeNumber: 123317,
             firstName: "Tomasz",
             secondName: "Krzysztof",
@@ -50,7 +49,7 @@ users.put = (req, res) => {
             zipCode: "80-000",
             country: "Polska",
             email: "tomasz.kowalski@dealer.toyota.pl",
-            privetPhone: 600300233,
+            privatePhone: 600300233,
             businessPhone: 789000100,
             jobPosition: "doradca sprzedaży flotowej",
             workplace: "oddział Gdańsk, pomorska",
@@ -73,7 +72,7 @@ users.delete = (req, res) => {
     MongoClient.connect(url, function(err, db) {
         if (err) throw err;
         const dbo = db.db(dbname);
-        const myquery = { _id: 'Mountain 21' };
+        const myquery = { _id: req.params[0] };
         dbo.collection(tablename).deleteOne(myquery, function(err, obj) {
             if (err) throw err;
             console.log("1 user deleted");
