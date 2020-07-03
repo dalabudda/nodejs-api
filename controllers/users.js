@@ -1,15 +1,16 @@
 let users = {};
 
-const MongoClient = require('mongodb').MongoClient;
+const mongodb = require('mongodb');
+const MongoClient = mongodb.MongoClient;
 const url = process.env.MONGODB_URI;
-const dbname = "heroku_hlcqgxf6";
-const tablename = "users";
+const dbname = process.env.MONGODB_DBNAME;
+const collection_name = "users";
 
 users.init = (req, res) => {
     MongoClient.connect(url, (err, db) => {
         if (err) throw err;
         const dbo = db.db(dbname);
-        dbo.createCollection(tablename, (err, result) => {
+        dbo.createCollection(collection_name, (err, result) => {
             if (err) throw err;
             console.log("Collection created!");
             db.close();
@@ -22,7 +23,7 @@ users.get = (req, res) => {
     MongoClient.connect(url, function(err, db) {
         if (err) throw err;
         const dbo = db.db(dbname);
-        dbo.collection(tablename).find({}).toArray(function(err, result) {
+        dbo.collection(collection_name).find({}).toArray(function(err, result) {
             if (err) throw err;
             console.log(result);
             db.close();
@@ -59,7 +60,7 @@ users.put = (req, res) => {
             dateOfTermination: "",
             employmentStatus: true
         };
-        dbo.collection(tablename).insertOne(myobj, function(err, result) {
+        dbo.collection(collection_name).insertOne(myobj, function(err, result) {
             if (err) throw err;
             console.log("1 user inserted");
             db.close();
@@ -72,8 +73,8 @@ users.delete = (req, res) => {
     MongoClient.connect(url, function(err, db) {
         if (err) throw err;
         const dbo = db.db(dbname);
-        const myquery = { _id: req.params.userId };
-        dbo.collection(tablename).deleteOne(myquery, function(err, obj) {
+        const myquery = { _id: new mongodb.ObjectID(req.params.userId) };
+        dbo.collection(collection_name).deleteOne(myquery, function(err, obj) {
             if (err) throw err;
             console.log("1 user deleted");
             db.close();
