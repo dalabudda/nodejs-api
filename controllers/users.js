@@ -1,14 +1,15 @@
 let users = {};
 
-let MongoClient = require('mongodb').MongoClient;
-let url = process.env.MONGODB_URI;
-let dbname = "heroku_hlcqgxf6";
+const MongoClient = require('mongodb').MongoClient;
+const url = process.env.MONGODB_URI;
+const dbname = "heroku_hlcqgxf6";
+const tablename = "users";
 
 users.init = (req, res) => {
     MongoClient.connect(url, (err, db) => {
         if (err) throw err;
-        let dbo = db.db(dbname);
-        dbo.createCollection("users", (err, result) => {
+        const dbo = db.db(dbname);
+        dbo.createCollection(tablename, (err, result) => {
             if (err) throw err;
             console.log("Collection created!");
             db.close();
@@ -17,11 +18,24 @@ users.init = (req, res) => {
     res.send("Done");
 };
 
+users.get = (req, res) => {
+    MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        const dbo = db.db(dbname);
+        dbo.collection(tablename).find({}).toArray(function(err, result) {
+            if (err) throw err;
+            console.log(result);
+            db.close();
+            res.json(result);
+        });
+    });
+};
+
 users.put = (req, res) => {
     MongoClient.connect(url, function(err, db) {
         if (err) throw err;
-        let dbo = db.db(dbname);
-        let myobj = {
+        const dbo = db.db(dbname);
+        const myobj = {
             id: 1,
             employeeNumber: 123317,
             firstName: "Tomasz",
@@ -45,26 +59,26 @@ users.put = (req, res) => {
             dateOfEmployment: "2010-01-01T00:00:00.000Z",
             dateOfTermination: "",
             employmentStatus: true
-          };
-        dbo.collection("users").insertOne(myobj, function(err, result) {
+        };
+        dbo.collection(tablename).insertOne(myobj, function(err, result) {
             if (err) throw err;
             console.log("1 user inserted");
             db.close();
-          });
-      });
-      res.send("Done");
+        });
+    });
+    res.send("Done");
 };
 
-users.get = (req, res) => {
+users.delete = (req, res) => {
     MongoClient.connect(url, function(err, db) {
         if (err) throw err;
-        let dbo = db.db(dbname);
-        dbo.collection("users").find({}).toArray(function(err, result) {
+        const dbo = db.db(dbname);
+        const myquery = { _id: 'Mountain 21' };
+        dbo.collection(tablename).deleteOne(myquery, function(err, obj) {
             if (err) throw err;
-            console.log(result);
+            console.log("1 user deleted");
             db.close();
-            res.send(JSON.stringify(result));
-          });
+        });
     });
 };
 
