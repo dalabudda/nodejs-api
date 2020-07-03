@@ -72,13 +72,14 @@ users.delete = (req, res) => {
     MongoClient.connect(url, function(err, db) {
         if (err) throw err;
         const dbo = db.db(dbname);
-        const myquery = { _id: req.params[0] };
+        const myquery = { _id: req.params.userId };
         dbo.collection(tablename).deleteOne(myquery, function(err, obj) {
             if (err) throw err;
             console.log("1 user deleted");
             db.close();
         });
     });
+    res.send("Done");
 };
 
 module.exports = users;
