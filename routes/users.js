@@ -15,7 +15,7 @@ router.post('/', (req, res) => {
 });
 router.get('/:userId', (req, res) => {
     users.readOne(req.params.userId, (result) => {
-        res.json(result);
+        res.json(result[0]);
     });
 });
 router.get('/', (req, res) => {
