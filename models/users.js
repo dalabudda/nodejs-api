@@ -5,38 +5,31 @@ let model = require('./index.js');
 
 const COLLECTION_NAME = "users";
 
-users.init = (req, res) => {
-    model.init(COLLECTION_NAME, (result) => {
-        res.send("Done");
-    })
+users.init = (callback) => {
+    model.init(COLLECTION_NAME, callback);
 };
 
-users.create = (req, res) => {
-    const user = req.body;
-    model.create(COLLECTION_NAME, user, (result) => {
-        res.send("Done");
-    });
+users.createOne = (user, callback) => {
+    model.createOne(COLLECTION_NAME, user, callback);
 };
 
-users.read = (req, res) => {
-    model.read(COLLECTION_NAME, {}, (result) => {
-        res.json(result);
-    })
+users.readOne = (id, callback) => {
+    const query = { _id: new mongodb.ObjectID(id) };
+    model.read(COLLECTION_NAME, query, callback)
 };
 
-users.update = (req, res) => {
-    const query = { _id: new mongodb.ObjectID(req.params.userId) };
-    const user = req.body;
-    model.update(COLLECTION_NAME, query, user, (result) => {
-        res.send("Done");
-    });
+users.readAll = (callback) => {
+    model.read(COLLECTION_NAME, {}, callback)
 };
 
-users.delete = (req, res) => {
-    const query = { _id: new mongodb.ObjectID(req.params.userId) };
-    model.delete(COLLECTION_NAME, query, (result) => {
-        res.send("Done");
-    });
+users.updateOne = (id, user, callback) => {
+    const query = { _id: new mongodb.ObjectID(id) };
+    model.updateOne(COLLECTION_NAME, query, user, callback);
+};
+
+users.deleteOne = (id, callback) => {
+    const query = { _id: new mongodb.ObjectID(id) };
+    model.deleteOne(COLLECTION_NAME, query, callback);
 };
 
 module.exports = users;

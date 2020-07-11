@@ -42,7 +42,7 @@ model.init = (collection_name, callback) => {
     });
 };
 
-model.create = (collection_name, object, callback) => {
+model.createOne = (collection_name, object, callback) => {
     connect(() => {
         databaseObject.collection(collection_name).insertOne(object, (err, result) => {
             if (err) throw err;
@@ -64,7 +64,7 @@ model.read = (collection_name, query = {}, callback) => {
     });
 };
 
-model.update = (collection_name, query, object, callback) => {
+model.updateOne = (collection_name, query, object, callback) => {
     connect(() => {
         databaseObject.collection(collection_name).updateOne(query, object, (err, result) => {
             if (err) throw err;
@@ -75,7 +75,7 @@ model.update = (collection_name, query, object, callback) => {
     });
 };
 
-model.delete = (collection_name, query, callback) => {
+model.deleteOne = (collection_name, query, callback) => {
     connect(() => {
         databaseObject.collection(collection_name).deleteOne(query, (err, obj) => {
             if (err) throw err;
