@@ -36,4 +36,8 @@ users.deleteOne = (id, callback) => {
     model.deleteOne(COLLECTION_NAME, query, callback);
 };
 
+users.deleteAll = (callback) => {
+    model.deleteMany(COLLECTION_NAME, {}, callback);
+};
+
 module.exports = users;

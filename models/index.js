@@ -47,7 +47,7 @@ model.read = (collection_name, query = {}, callback) => {
     connect(() => {
         databaseObject.collection(collection_name).find(query).toArray((err, result) => {
             if (err) throw err;
-            console.log("1 selected");
+            console.log("selected");
             disconnect();
             callback(result);
         });
@@ -76,5 +76,16 @@ model.deleteOne = (collection_name, query, callback) => {
         });
     });
 };
+
+model.deleteMany = (collection_name, query, callback) => {
+    connect(() => {
+        databaseObject.collection(collection_name).deleteMany(query, (err, result) => {
+            if (err) throw err;
+            console.log("Many deleted");
+            disconnect();
+            callback(result);
+        });
+    });
+}
 
 module.exports = model;

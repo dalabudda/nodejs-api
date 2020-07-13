@@ -11,7 +11,7 @@ router.get('/init', (req, res) => {
 router.post('/', (req, res) => {
     const user = req.body;
     users.createOne(user, (result) => {
-        const object = {_id: result.insertedId};
+        const object = { _id: result.insertedId };
         res.json(object);
     });
 });
@@ -31,14 +31,21 @@ router.get('/', (req, res) => {
 router.put('/:userId', (req, res) => {
     const user = req.body;
     users.updateOne(req.params.userId, user, (result) => {
-        const object = {_id: req.params.userId};
+        const object = { _id: req.params.userId };
         res.json(object);
     });
 });
 
 router.delete('/:userId', (req, res) => {
     users.deleteOne(req.params.userId, (result) => {
-        res.send("Done");
+        const object = { _id: req.params.userId };
+        res.json(object);
+    });
+});
+
+router.delete('/deleteAll', (req, res) => {
+    users.deleteAll((result) => {
+        res.send("Deleted all users");
     });
 });
 
