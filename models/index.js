@@ -77,7 +77,7 @@ model.updateOne = (collection_name, query, object, callback) => {
 
 model.deleteOne = (collection_name, query, callback) => {
     connect(() => {
-        databaseObject.collection(collection_name).deleteOne(query, (err, obj) => {
+        databaseObject.collection(collection_name).deleteOne(query, (err, result) => {
             if (err) throw err;
             console.log("1 deleted");
             disconnect();

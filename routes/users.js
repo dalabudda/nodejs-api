@@ -7,28 +7,33 @@ router.get('/init', (req, res) => {
         res.send("Done");
     });
 });
+
 router.post('/', (req, res) => {
     const user = req.body;
     users.createOne(user, (result) => {
-        res.send("Done");
+        res.json(result);
     });
 });
+
 router.get('/:userId', (req, res) => {
     users.readOne(req.params.userId, (result) => {
         res.json(result[0]);
     });
 });
+
 router.get('/', (req, res) => {
     users.readAll((result) => {
         res.json(result);
     });
 });
+
 router.put('/:userId', (req, res) => {
     const user = req.body;
     users.updateOne(req.params.userId, user, (result) => {
-        res.send("Done");
+        res.json(result);
     });
 });
+
 router.delete('/:userId', (req, res) => {
     users.deleteOne(req.params.userId, (result) => {
         res.send("Done");

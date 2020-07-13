@@ -1,7 +1,7 @@
 let users = {};
 
 const mongodb = require('mongodb');
-let model = require('./index.js');
+const model = require('./index.js');
 
 const COLLECTION_NAME = "users";
 
