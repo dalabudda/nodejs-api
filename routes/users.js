@@ -8,6 +8,12 @@ router.get('/init', (req, res) => {
     });
 });
 
+router.get('/deleteAll', (req, res) => {
+    users.deleteAll((result) => {
+        res.send("Deleted all users");
+    });
+});
+
 router.post('/', (req, res) => {
     const user = req.body;
     users.createOne(user, (result) => {
@@ -40,12 +46,6 @@ router.delete('/:userId', (req, res) => {
     users.deleteOne(req.params.userId, (result) => {
         const object = { _id: req.params.userId };
         res.json(object);
-    });
-});
-
-router.get('/deleteAll', (req, res) => {
-    users.deleteAll((result) => {
-        res.send("Deleted all users");
     });
 });
 
