@@ -66,7 +66,8 @@ model.read = (collection_name, query = {}, callback) => {
 
 model.updateOne = (collection_name, query, object, callback) => {
     connect(() => {
-        databaseObject.collection(collection_name).updateOne(query, object, (err, result) => {
+        const newObject = { $set: object};
+        databaseObject.collection(collection_name).updateOne(query, newObject, (err, result) => {
             if (err) throw err;
             console.log("1 updated");
             disconnect();
