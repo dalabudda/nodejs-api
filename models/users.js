@@ -10,7 +10,7 @@ users.init = (callback) => {
 };
 
 users.createOne = (user, callback) => {
-    if (user._id)
+    if (user._id != undefined)
         delete user._id;
     model.createOne(COLLECTION_NAME, user, callback);
 };
@@ -25,7 +25,7 @@ users.readAll = (callback) => {
 };
 
 users.updateOne = (id, user, callback) => {
-    if (user._id)
+    if (user._id != undefined)
         delete user._id;
     const query = { _id: new mongodb.ObjectID(id) };
     model.updateOne(COLLECTION_NAME, query, user, callback);

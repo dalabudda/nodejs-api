@@ -11,7 +11,8 @@ router.get('/init', (req, res) => {
 router.post('/', (req, res) => {
     const user = req.body;
     users.createOne(user, (result) => {
-        res.send(result.insertedId);
+        const object = {_id: result.insertedId};
+        res.json(object);
     });
 });
 
@@ -30,7 +31,8 @@ router.get('/', (req, res) => {
 router.put('/:userId', (req, res) => {
     const user = req.body;
     users.updateOne(req.params.userId, user, (result) => {
-        res.send(req.params.userId);
+        const object = {_id: req.params.userId};
+        res.json(object);
     });
 });
 

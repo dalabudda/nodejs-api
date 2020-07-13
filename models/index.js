@@ -5,30 +5,20 @@ const DB_URL = process.env.MONGODB_URI;
 const DBNAME = process.env.MONGODB_DBNAME;
 let database;
 let databaseObject;
-let numberOfConnections = 0;
 
 const connect = (callback) => {
-    numberOfConnections++;
-    if (numberOfConnections > 1) {
+    MongoClient.connect(DB_URL, (err, db) => {
+        if (err) throw err;
+        console.log("Connected to database");
+        database = db;
+        databaseObject = database.db(DBNAME);
         callback();
-    }
-    else {
-        MongoClient.connect(DB_URL, (err, db) => {
-            if (err) throw err;
-            console.log("Connected to database");
-            database = db;
-            databaseObject = database.db(DBNAME);
-            callback();
-        });
-    }
+    });
 };
 
 const disconnect = () => {
-    numberOfConnections--;
-    if (numberOfConnections == 0) {
-        database.close();
-        console.log("Disconnected from database");
-    }
+    database.close();
+    console.log("Disconnected from database");
 };
 
 model.init = (collection_name, callback) => {
