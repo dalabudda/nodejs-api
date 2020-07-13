@@ -23,6 +23,8 @@ users.readAll = (callback) => {
 };
 
 users.updateOne = (id, user, callback) => {
+    if (user._id)
+        delete user._id;
     const query = { _id: new mongodb.ObjectID(id) };
     model.updateOne(COLLECTION_NAME, query, user, callback);
 };
