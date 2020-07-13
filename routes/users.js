@@ -43,7 +43,7 @@ router.delete('/:userId', (req, res) => {
     });
 });
 
-router.delete('/deleteAll', (req, res) => {
+router.get('/deleteAll', (req, res) => {
     users.deleteAll((result) => {
         res.send("Deleted all users");
     });
