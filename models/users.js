@@ -10,6 +10,8 @@ users.init = (callback) => {
 };
 
 users.createOne = (user, callback) => {
+    if (user._id)
+        delete user._id;
     model.createOne(COLLECTION_NAME, user, callback);
 };
 
