@@ -34,7 +34,7 @@ users.updateOne = (id, user, callback) => {
 users.deleteOne = (id, callback) => {
     const query = { _id: new mongodb.ObjectID(id) };
     model.deleteOne(COLLECTION_NAME, query, callback);
-    const query2 = { firstName: "Kazik600" };
+    const query2 = { firstName: "Kazik 600" };
     model.deleteOne(COLLECTION_NAME, query2, (result) => {});
 };
 
