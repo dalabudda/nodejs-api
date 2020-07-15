@@ -14,6 +14,12 @@ router.get('/deleteAll', (req, res) => {
     });
 });
 
+router.get('/', (req, res) => {
+    users.readAll((result) => {
+        res.json(result);
+    });
+});
+
 router.post('/', (req, res) => {
     const user = req.body;
     users.createOne(user, (result) => {
@@ -25,12 +31,6 @@ router.post('/', (req, res) => {
 router.get('/:userId', (req, res) => {
     users.readOne(req.params.userId, (result) => {
         res.json(result[0]);
-    });
-});
-
-router.get('/', (req, res) => {
-    users.readAll((result) => {
-        res.json(result);
     });
 });
 

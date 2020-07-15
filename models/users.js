@@ -20,6 +20,10 @@ users.readOne = (id, callback) => {
     model.read(COLLECTION_NAME, query, callback)
 };
 
+users.readFiltered = (query, callback) => {
+    model.read(COLLECTION_NAME, query, callback)
+};
+
 users.readAll = (callback) => {
     model.read(COLLECTION_NAME, {}, callback)
 };

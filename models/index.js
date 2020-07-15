@@ -1,5 +1,3 @@
-let model = {};
-
 const MongoClient = require('mongodb').MongoClient;
 const DB_URL = process.env.MONGODB_URI;
 const DBNAME = process.env.MONGODB_DBNAME;
@@ -21,7 +19,7 @@ const disconnect = () => {
     console.log("Disconnected from database");
 };
 
-model.init = (collection_name, callback) => {
+const init = (collection_name, callback) => {
     connect(() => {
         databaseObject.createCollection(collection_name, (err, result) => {
             if (err) throw err;
@@ -32,7 +30,7 @@ model.init = (collection_name, callback) => {
     });
 };
 
-model.createOne = (collection_name, object, callback) => {
+const createOne = (collection_name, object, callback) => {
     connect(() => {
         databaseObject.collection(collection_name).insertOne(object, (err, result) => {
             if (err) throw err;
@@ -43,7 +41,7 @@ model.createOne = (collection_name, object, callback) => {
     });
 };
 
-model.read = (collection_name, query = {}, callback) => {
+const read = (collection_name, query = {}, callback) => {
     connect(() => {
         databaseObject.collection(collection_name).find(query).toArray((err, result) => {
             if (err) throw err;
@@ -54,7 +52,7 @@ model.read = (collection_name, query = {}, callback) => {
     });
 };
 
-model.updateOne = (collection_name, query, object, callback) => {
+const updateOne = (collection_name, query, object, callback) => {
     connect(() => {
         const newObject = { $set: object};
         databaseObject.collection(collection_name).updateOne(query, newObject, (err, result) => {
@@ -66,7 +64,7 @@ model.updateOne = (collection_name, query, object, callback) => {
     });
 };
 
-model.deleteOne = (collection_name, query, callback) => {
+const deleteOne = (collection_name, query, callback) => {
     connect(() => {
         databaseObject.collection(collection_name).deleteOne(query, (err, result) => {
             if (err) throw err;
@@ -77,7 +75,7 @@ model.deleteOne = (collection_name, query, callback) => {
     });
 };
 
-model.deleteMany = (collection_name, query, callback) => {
+const deleteMany = (collection_name, query, callback) => {
     connect(() => {
         databaseObject.collection(collection_name).deleteMany(query, (err, result) => {
             if (err) throw err;
@@ -88,4 +86,4 @@ model.deleteMany = (collection_name, query, callback) => {
     });
 }
 
-module.exports = model;
+module.exports = { init, createOne, read, updateOne, deleteOne, deleteMany };

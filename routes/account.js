@@ -16,13 +16,21 @@ router.get('/', (req, res) => {
 
 router.post('/login', (req, res) => {
     const login = req.body.login;
-    if (!login)
+    if (!login) {
         res.send("Login needed");
+        return;
+    }
+        
     const pass = req.body.password;
-    if (!pass)
+    if (!pass) {
         res.send("Password needed");
+        return;
+    }
 
     account.login(login, pass, (result) => {
+        if (result.status == "success") {
+            req.session.account = { userId: result.id };
+        }
         res.json(result);
     });
 });
@@ -31,5 +39,9 @@ router.get('/logout', (req, res) => {
     req.session.account = {};
     res.send("Logged out");
 });
+
+/*router.get('/resetPassword', (req, res) => {
+    res.send("new pass");
+});*/
 
 module.exports = router;
