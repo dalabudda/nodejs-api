@@ -16,6 +16,7 @@ router.get('/', (req, res) => {
 
 router.post('/login', (req, res) => {
     const login = req.body.login;
+    console.log(req.body);
     if (!login) {
         res.send("Login needed");
         return;
