@@ -29,7 +29,7 @@ router.post('/login', (req, res) => {
 
     account.login(login, pass, (status, result) => {
         if (status == 200) {
-            req.session.account = { userId: result };
+            req.session.account = { userId: result._id };
         }
         res.status(status).json(result);
     });
@@ -52,7 +52,7 @@ router.get('/resetPassword', (req, res) => {
     const sess = req.session.account;
     if (sess && sess.userId) {
         account.resetPassword(sess.userId, (result) => {
-            res.json(sess.userId);
+            res.json({ _id: sess.userId });
         });
     }
     else {
