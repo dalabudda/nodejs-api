@@ -10,20 +10,20 @@ router.get('/', (req, res) => {
         });
     }
     else {
-        res.status(401).send("Not logged in");
+        res.status(401).send({ error: "Not logged in" });
     }
 });
 
 router.post('/login', (req, res) => {
     const login = req.body.login;
     if (!login) {
-        res.status(400).send("Login needed");
+        res.status(400).send({ error: "Login needed" });
         return;
     }
         
     const pass = req.body.password;
     if (!pass) {
-        res.status(400).send("Password needed");
+        res.status(400).send({ error: "Password needed" });
         return;
     }
 
@@ -56,7 +56,7 @@ router.get('/resetPassword', (req, res) => {
         });
     }
     else {
-        res.status(401).send("Not logged in");
+        res.status(401).send({ error: "Not logged in" });
     }
 });
 
