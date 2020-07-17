@@ -23,7 +23,7 @@ account.login = (login, pass, callback) => {
     users.readFiltered(query, (result) => {
         if (result[0]) {
             if (result[0].password == pass) {
-                callback(200, { _id: result[0]._id });
+                callback(200, result[0]);
             }
             else {
                 callback(400, { error: "wrong password" });
