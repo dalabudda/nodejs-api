@@ -10,29 +10,28 @@ router.get('/', (req, res) => {
         });
     }
     else {
-        res.send("Not logged in");
+        res.status(401).send("Not logged in");
     }
 });
 
 router.post('/login', (req, res) => {
     const login = req.body.login;
-    console.log(req.body);
     if (!login) {
-        res.send("Login needed");
+        res.status(400).send("Login needed");
         return;
     }
         
     const pass = req.body.password;
     if (!pass) {
-        res.send("Password needed");
+        res.status(400).send("Password needed");
         return;
     }
 
-    account.login(login, pass, (result) => {
-        if (result.status == "success") {
-            req.session.account = { userId: result.id };
+    account.login(login, pass, (status, result) => {
+        if (status == 200) {
+            req.session.account = { userId: result };
         }
-        res.json(result);
+        res.status(status).json(result);
     });
 });
 
@@ -41,8 +40,24 @@ router.get('/logout', (req, res) => {
     res.send("Logged out");
 });
 
-/*router.get('/resetPassword', (req, res) => {
-    res.send("new pass");
-});*/
+router.post('/register', (req, res) => {
+    const user = req.body;
+    account.register(user, (result) => {
+        const object = { _id: result.insertedId };
+        res.json(object);
+    })
+});
+
+router.get('/resetPassword', (req, res) => {
+    const sess = req.session.account;
+    if (sess && sess.userId) {
+        account.resetPassword(sess.userId, (result) => {
+            res.json(sess.userId);
+        });
+    }
+    else {
+        res.status(401).send("Not logged in");
+    }
+});
 
 module.exports = router;

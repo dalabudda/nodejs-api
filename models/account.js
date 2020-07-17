@@ -9,22 +9,39 @@ account.get = (userId, callback) => {
 
 account.login = (login, pass, callback) => {
     const property = "pesel";
-    const query = { _id: new mongodb.ObjectID(login) };
+    let query;
+    if (/[0-9A-Fa-f]{24}/g.test(login)) {
+        query = { _id: new mongodb.ObjectID(login) };
+    }
+    else {
+        callback(400, { error: "login should be _id" });
+        return;
+    }
+        
     //let query = {};
     //query[property] = login;
     users.readFiltered(query, (result) => {
         if (result[0]) {
             if (result[0].password == pass) {
-                callback({ status: "success", id: result[0]._id });
+                callback(200, result[0]._id);
             }
             else {
-                callback({ status: "error", message: "wrong password" });
+                callback(400, { error: "wrong password" });
             }
         }
         else {
-            callback({ status: "error", message: "account not found" });
+            callback(404, { error: "account not found" });
         }
     });
+};
+
+account.register = (user, callback) => {
+    users.createOne(user, callback);
+};
+
+account.resetPassword = (userId, callback) => {
+    const newPassword = { password: "reset" };
+    users.updateOne(userId, newPassword, callback);
 };
 
 module.exports = account;

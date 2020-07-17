@@ -4,6 +4,13 @@ const mongodb = require('mongodb');
 const model = require('./index.js');
 
 const COLLECTION_NAME = "users";
+const collection = null;
+const check = () => {
+    if (model.databaseObject)
+        collection = databaseObject.collection('users');
+    else
+        setTimeout(check, 1000);
+};
 
 users.init = (callback) => {
     model.init(COLLECTION_NAME, callback);
@@ -12,7 +19,11 @@ users.init = (callback) => {
 users.createOne = (user, callback) => {
     if (user._id != undefined)
         delete user._id;
-    model.createOne(COLLECTION_NAME, user, callback);
+    collection.insertOne(user, (err, result) => {
+        if (err) throw err;
+        console.log("1 inserted");
+        callback(result);
+    });
 };
 
 users.readOne = (id, callback) => {
