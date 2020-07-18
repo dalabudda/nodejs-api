@@ -19,11 +19,7 @@ users.init = (callback) => {
 users.createOne = (user, callback) => {
     if (user._id != undefined)
         delete user._id;
-    collection.insertOne(user, (err, result) => {
-        if (err) throw err;
-        console.log("1 inserted");
-        callback(result);
-    });
+    model.createOne(COLLECTION_NAME, user, callback)
 };
 
 users.readOne = (id, callback) => {
