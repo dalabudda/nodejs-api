@@ -62,4 +62,4 @@ const deleteMany = (collection_name, query, callback) => {
     });
 }
 
-module.exports = { databaseObject, init, createOne, read, updateOne, deleteOne, deleteMany };
+module.exports = { init, createOne, read, updateOne, deleteOne, deleteMany };

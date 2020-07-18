@@ -4,13 +4,6 @@ const mongodb = require('mongodb');
 const model = require('./index.js');
 
 const COLLECTION_NAME = "users";
-const collection = null;
-const check = () => {
-    if (model.databaseObject)
-        collection = databaseObject.collection('users');
-    else
-        setTimeout(check, 1000);
-};
 
 users.init = (callback) => {
     model.init(COLLECTION_NAME, callback);
@@ -19,6 +12,7 @@ users.init = (callback) => {
 users.createOne = (user, callback) => {
     if (user._id != undefined)
         delete user._id;
+    user.password = "empty";
     model.createOne(COLLECTION_NAME, user, callback)
 };
 
