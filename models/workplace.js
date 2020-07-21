@@ -12,7 +12,6 @@ workplace.init = (callback) => {
 workplace.createOne = (workp, callback) => {
     if (workp._id != undefined)
         delete workp._id;
-        workp.password = "empty";
     model.createOne(COLLECTION_NAME, workp, callback)
 };
 
