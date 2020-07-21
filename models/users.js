@@ -5,6 +5,52 @@ const model = require('./index.js');
 
 const COLLECTION_NAME = "users";
 
+const userProto = {
+    _id: "",
+    personalData:	{	
+        firstName:	"",
+        secondName:	"",
+        lastName:	"",
+        pesel:	"",
+        gender:	"",
+        dateOfBirth: ""
+    },
+    address:	{	
+        street:	"",
+        propertyNumber:	"",
+        apartmentNumber: "",
+        city: "",
+        zipCode: "",
+        country: ""
+    },
+    contacts:	{	
+        email:	"",
+        privatePhone: "",
+        businessPhone: "",
+        apps:	{
+            skype: "",
+            discord: ""
+        }
+    },
+    job:	{	
+        position: "",
+        workplace: "",	
+        dateOfEmployment: "",
+        dateOfTermination:	"",
+        supervisor: "",
+    },
+    role: "",
+    dateOfCreation:	"",	
+    dateOfLastLogin: "",
+    badLoginCount: 0,
+    logs:	[	
+        {	
+            date: "",
+            message: ""
+        }
+    ]	
+};
+
 users.init = (callback) => {
     model.init(COLLECTION_NAME, callback);
 };
